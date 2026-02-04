@@ -2,7 +2,12 @@
   <div v-if="property">
     <h2>{{ property.title }}</h2>
     <p>{{ property.description }}</p>
+    <p>{{ property.rooms }}</p>
+    <p>{{ property.bathrooms }}</p>
+    <p>{{ property.bedrooms }}</p>
+    <p>{{ property.parking_spots }}</p>
     <p>{{ property.price }}$</p>
+
 
     <textarea v-model="message" placeholder="Message seller"></textarea>
     <button @click="sendInquiry">Send Inquiry</button>
