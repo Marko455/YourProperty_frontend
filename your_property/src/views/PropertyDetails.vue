@@ -1,6 +1,7 @@
 <template>
   <div v-if="property">
     <h2>{{ property.title }}</h2>
+    <p>{{ property.type }}</p>
     <p>{{ property.description }}</p>
     <p>{{ property.rooms }}</p>
     <p>{{ property.bathrooms }}</p>
