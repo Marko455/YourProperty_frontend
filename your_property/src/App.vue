@@ -16,6 +16,7 @@ const logout = () => {
     <router-link to="/properties">Properties</router-link> |
     <router-link v-if="isLoggedIn()" to="/create-property">Create Property</router-link> |
     <router-link v-if="isLoggedIn()" to="/my-inquiries">My Inquiries</router-link>
+    <router-link to="/profile">My Profile</router-link> |
     <router-link to="/register">Register</router-link>
     <router-link to="/login">Login</router-link>
     <button @click="logout">Logout</button>

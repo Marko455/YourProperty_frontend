@@ -5,6 +5,7 @@ import Properties from "../views/Properties.vue";
 import PropertyDetails from "../views/PropertyDetails.vue";
 import MyInquiries from "../views/MyInquiries.vue";
 import CreateProperty from "../views/CreateProperty.vue";
+import MyProfile from "../views/MyProfile.vue";
 
 const routes = [
   { path: "/", redirect: "/properties" },
@@ -14,6 +15,7 @@ const routes = [
   { path: "/properties/:id", component: PropertyDetails },
   { path: "/my-inquiries", component: MyInquiries },
   { path: "/create-property", component: CreateProperty },
+  { path: "/profile", component: MyProfile}
 ];
 
 export default createRouter({
