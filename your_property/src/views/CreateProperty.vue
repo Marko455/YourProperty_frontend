@@ -1,23 +1,40 @@
 <template>
-  <div>
-    <h2>Create Property</h2>
+  <div class="create-page">
+    <div class="create-card">
+      <h2>Create Property</h2>
 
-    <input v-model="title" placeholder="Title" />
-    <textarea v-model="description" placeholder="Description"></textarea>
-    <input v-model.number="rooms" type="number" placeholder="Number of rooms" />
-    <input v-model.number="bathrooms" type="number" placeholder="Number of bathrooms" />
-    <input v-model.number="bedrooms" type="number" placeholder="Number of bedrooms" />
-    <input v-model.number="parking_spots" type="number" placeholder="Number of parking spots" />
-    <input v-model.number="price" type="number" placeholder="Price" />
-    <input v-model="location" placeholder="Location" />
+      <div class="form-group">
+        <input v-model="title" placeholder="Title" />
+      </div>
 
-    <select v-model="type">
-      <option disabled value="">Select type</option>
-      <option value="house">House</option>
-      <option value="apartment">Apartment</option>
-    </select>
+      <div class="form-group">
+        <textarea
+          v-model="description"
+          placeholder="Description"
+          rows="4"
+        ></textarea>
+      </div>
 
-    <button @click="createProperty">Create</button>
+      <div class="grid">
+        <input v-model.number="rooms" type="number" placeholder="Rooms" />
+        <input v-model.number="bedrooms" type="number" placeholder="Bedrooms" />
+        <input v-model.number="bathrooms" type="number" placeholder="Bathrooms" />
+        <input v-model.number="parking_spots" type="number" placeholder="Parking spots" />
+      </div>
+
+      <div class="grid">
+        <input v-model.number="price" type="number" placeholder="Price" />
+        <input v-model="location" placeholder="Location" />
+      </div>
+
+      <select v-model="type">
+        <option disabled value="">Select type</option>
+        <option value="house">House</option>
+        <option value="apartment">Apartment</option>
+      </select>
+
+      <button @click="createProperty">Create Property</button>
+    </div>
   </div>
 </template>
 
@@ -60,3 +77,79 @@ const createProperty = async () => {
   }
 };
 </script>
+
+<style scoped>
+.create-page {
+  min-height: 100vh;
+  background-color: #eef1f5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1rem;
+}
+
+.create-card {
+  width: 100%;
+  max-width: 700px;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  color: #111;
+}
+
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+
+button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.85rem;
+  background-color: #4f46e5;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4338ca;
+}
+</style>
