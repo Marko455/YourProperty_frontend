@@ -33,7 +33,6 @@
         </div>
       </div>
 
-      <!-- Inquiry -->
       <div class="inquiry">
         <h3>Contact Seller</h3>
         <textarea

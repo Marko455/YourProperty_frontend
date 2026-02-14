@@ -41,6 +41,7 @@ const login = async () => {
   });
 
   localStorage.setItem("token", res.data.access_token);
+  localStorage.setItem("email", res.data.email);
   router.push("/properties");
 };
 </script>
