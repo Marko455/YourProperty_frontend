@@ -33,6 +33,12 @@
         <option value="apartment">Apartment</option>
       </select>
 
+      <div class="form-group image-section">
+        <label class="label">Property Images</label>
+        <input type="file" multiple accept="image/*" @change="handleFileChange"/>
+        <small class="hint">Pictures of your property.</small>
+      </div>
+
       <button @click="createProperty">Create Property</button>
     </div>
   </div>
@@ -52,12 +58,13 @@ const parking_spots = ref(null);
 const price = ref(null);
 const location = ref("");
 const type = ref("");
+const selectedFiles = ref([]);
 
 const router = useRouter();
 
 const createProperty = async () => {
   try {
-    await api.post("http://localhost:8001/properties", {
+    const response = await api.post("http://localhost:8001/properties", {
       title: title.value,
       description: description.value,
       rooms: rooms.value,
@@ -70,11 +77,36 @@ const createProperty = async () => {
       owner_id: "TEMP_SELLER_ID"
     });
 
+    const propertyId = response.data.property_id;
+
+    if (selectedFiles.value.length > 0) {
+      for (const file of selectedFiles.value) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        await api.post(
+          `http://localhost:8001/properties/${propertyId}/images`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          }
+        );
+      }
+    }
+
     alert("Property created!");
     router.push("/properties");
+
   } catch (err) {
+    console.error(err);
     alert("Error creating property");
   }
+};
+
+const handleFileChange = (event) => {
+  selectedFiles.value = Array.from(event.target.files);
 };
 </script>
 
@@ -102,7 +134,6 @@ h2 {
   color: #111;
 }
 
-
 input,
 textarea,
 select {
@@ -124,7 +155,6 @@ select:focus {
   border-color: #4f46e5;
 }
 
-
 .form-group {
   margin-bottom: 1.25rem;
 }
@@ -136,6 +166,22 @@ select:focus {
   margin-bottom: 1.25rem;
 }
 
+.image-section {
+  margin-top: 1.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.hint {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: #777;
+}
 
 button {
   margin-top: 1.5rem;

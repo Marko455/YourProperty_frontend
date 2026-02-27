@@ -1,6 +1,19 @@
 <template>
   <div class="property-page">
     <div v-if="property" class="property-card">
+
+      <div 
+        v-if="property.images && property.images.length"
+        class="image-gallery"
+      >
+        <img
+          v-for="img in property.images"
+          :key="img"
+          :src="`http://localhost:8001${img}`"
+          class="property-image"
+        />
+      </div>
+
       <div class="header">
         <h2>{{ property.title }}</h2>
         <span class="type">{{ property.type }}</span>
@@ -42,6 +55,7 @@
         ></textarea>
         <button @click="sendInquiry">Send Inquiry</button>
       </div>
+
     </div>
   </div>
 </template>
@@ -87,6 +101,22 @@ const sendInquiry = async () => {
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+
+.image-gallery {
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.property-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
 }
 
 
