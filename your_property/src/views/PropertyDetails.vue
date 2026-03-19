@@ -11,7 +11,21 @@
           :key="img"
           :src="`http://localhost:8001${img}`"
           class="property-image"
+          @click="openImage(img)"
         />
+      </div>
+
+      <div 
+        v-if="selectedImage"
+        class="image-modal"
+        @click="closeImage"
+      >
+        <img
+          :src="`http://localhost:8001${selectedImage}`"
+          class="modal-image"
+          @click.stop
+        />
+        <button class="close-btn" @click="closeImage">×</button>
       </div>
 
       <div class="header">
@@ -69,6 +83,16 @@ const route = useRoute();
 const property = ref(null);
 const message = ref("");
 
+const selectedImage = ref(null);
+
+const openImage = (img) => {
+  selectedImage.value = img;
+};
+
+const closeImage = () => {
+  selectedImage.value = null;
+};
+
 onMounted(async () => {
   const res = await api.get(
     `http://localhost:8001/properties/${route.params.id}`
@@ -117,6 +141,41 @@ const sendInquiry = async () => {
   object-fit: cover;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.property-image:hover {
+  transform: scale(1.03);
+}
+
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-image {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 

@@ -35,7 +35,12 @@
 
       <div class="form-group image-section">
         <label class="label">Property Images</label>
-        <input type="file" multiple accept="image/*" @change="handleFileChange"/>
+        <input 
+          type="file" 
+          multiple 
+          accept="image/*" 
+          @change="handleFileChange"
+        />
         <small class="hint">Pictures of your property.</small>
       </div>
 
@@ -62,6 +67,10 @@ const selectedFiles = ref([]);
 
 const router = useRouter();
 
+const handleFileChange = (event) => {
+  selectedFiles.value = Array.from(event.target.files);
+};
+
 const createProperty = async () => {
   try {
     const response = await api.post("http://localhost:8001/properties", {
@@ -80,20 +89,21 @@ const createProperty = async () => {
     const propertyId = response.data.property_id;
 
     if (selectedFiles.value.length > 0) {
-      for (const file of selectedFiles.value) {
-        const formData = new FormData();
-        formData.append("file", file);
+      const formData = new FormData();
 
-        await api.post(
-          `http://localhost:8001/properties/${propertyId}/images`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
-          }
-        );
+      for (const file of selectedFiles.value) {
+        formData.append("files", file);
       }
+
+      await api.post(
+        `http://localhost:8001/properties/${propertyId}/images`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
     }
 
     alert("Property created!");
@@ -103,10 +113,6 @@ const createProperty = async () => {
     console.error(err);
     alert("Error creating property");
   }
-};
-
-const handleFileChange = (event) => {
-  selectedFiles.value = Array.from(event.target.files);
 };
 </script>
 
