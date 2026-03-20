@@ -30,7 +30,11 @@
 
       <div class="header">
         <h2>{{ property.title }}</h2>
-        <span class="type">{{ property.type }}</span>
+
+        <div class="header-actions">
+          <span class="type">{{ property.type }}</span>
+          <button class="edit-btn" @click="goToEdit">Edit</button>
+        </div>
       </div>
 
       <div class="price">
@@ -76,13 +80,13 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import api from "../api/api";
 
 const route = useRoute();
 const property = ref(null);
 const message = ref("");
-
+const router = useRouter();
 const selectedImage = ref(null);
 
 const openImage = (img) => {
@@ -91,6 +95,10 @@ const openImage = (img) => {
 
 const closeImage = () => {
   selectedImage.value = null;
+};
+
+const goToEdit = () => {
+  router.push(`/properties/${route.params.id}/edit`);
 };
 
 onMounted(async () => {
